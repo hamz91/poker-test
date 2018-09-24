@@ -21469,7 +21469,18 @@ var PokerHandForm = function (_React$Component) {
       console.log(playerCards.hand);
       // console.log("opp", opponentCards.hand);
 
-      console.log(playerCards.isStriaghtFlush(playerCards.hand));
+      console.log("royal flush", playerCards.isRoyalFlush(playerCards.hand));
+      console.log("straight flush", playerCards.isStraightFlush(playerCards.hand));
+      console.log("flush", playerCards.isFlush(playerCards.hand));
+      console.log("straight", playerCards.isStraight(playerCards.hand));
+      console.log("full house", playerCards.isFullHouse(playerCards.hand));
+      console.log("dupes", playerCards.duplicateCounter(playerCards.hand));
+
+      console.log("four kind", playerCards.isFourKind(playerCards.hand));
+      console.log("three kind", playerCards.isThreeKind(playerCards.hand));
+      // console.log("two pair", playerCards.isTwoPair(playerCards.hand));
+      console.log("pair", playerCards.isPair(playerCards.hand));
+      // console.log("high card", playerCards.isHighCard(playerCards.hand));
 
       // playerCards.compareWith(opponentCards);
     }
@@ -21557,17 +21568,28 @@ var PokerHand = function () {
       });
     }
   }, {
+    key: "isRoyalFlush",
+    value: function isRoyalFlush(hand) {
+      var royalFlush = 10;
+      if (!this.isFlush(hand)) return 0;
+
+      var sortedHand = this.sortByValueAsc(hand);
+      if (sortedHand[0].value === 10) {
+        return royalFlush;
+      } else return 0;
+    }
+  }, {
     key: "isFlush",
     value: function isFlush(hand) {
-      var flush = 5;
+      var flush = 6;
       hand.forEach(function (card) {
         if (card.suit !== hand[0].suit) flush = 0;
       });
       return flush;
     }
   }, {
-    key: "isStriaghtFlush",
-    value: function isStriaghtFlush(hand) {
+    key: "isStraightFlush",
+    value: function isStraightFlush(hand) {
       if (!this.isFlush(hand)) return 0;
       var sortedHand = this.sortByValueAsc(hand);
       var straightFlush = 9;
@@ -21580,11 +21602,77 @@ var PokerHand = function () {
     key: "isStraight",
     value: function isStraight(hand) {
       var sortedHand = this.sortByValueAsc(hand);
-      var straight = 4;
+      var straight = 5;
       for (var i = 0; i < sortedHand.length - 1; i++) {
         if (sortedHand[i].value !== sortedHand[i + 1].value - 1) straight = 0;
       }
       return straight;
+    }
+  }, {
+    key: "duplicateCounter",
+    value: function duplicateCounter(hand) {
+      var tempCount = 1;
+      var counter = 1;
+      var sortedHand = this.sortByValueAsc(hand);
+
+      for (var i = 0; i < sortedHand.length - 1; i++) {
+        if (sortedHand[i].value === sortedHand[i + 1].value) tempCount++;else {
+          counter = Math.max(tempCount, counter);
+          tempCount = 1;
+        }
+      }
+      return counter;
+    }
+  }, {
+    key: "isFourKind",
+    value: function isFourKind(hand) {
+      var fourKind = 8;
+      if (this.duplicateCounter(hand) === 4) {
+        return fourKind;
+      } else return 0;
+    }
+  }, {
+    key: "isThreeKind",
+    value: function isThreeKind(hand) {
+      var threeKind = 4;
+      if (this.duplicateCounter(hand) === 3) {
+        return threeKind;
+      } else return 0;
+    }
+  }, {
+    key: "isPair",
+    value: function isPair(hand) {
+      var pair = 2;
+      if (this.duplicateCounter(hand) === 2) {
+        return pair;
+      } else return 0;
+    }
+  }, {
+    key: "isTwoPair",
+    value: function isTwoPair(hand) {
+      var twoPair = 3;
+    }
+  }, {
+    key: "isFullHouse",
+    value: function isFullHouse(hand) {
+      var fullHouse = 7;
+      if (this.duplicateCounter(hand) === 3) {
+        var tempCount = 1;
+        var counter = 1;
+        for (var i = 0; i < hand.length - 1; i++) {
+          if (hand[i].value === hand[i + 1].value) {
+            tempCount++;
+          } else {
+            if (tempCount === 2) {
+              counter = 2;
+            }
+            tempCount = 1;
+          }
+        }
+        if (counter === 2) {
+          return fullHouse;
+        } else return 0;
+      } else return 0;
     }
   }]);
 

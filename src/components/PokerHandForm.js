@@ -39,7 +39,21 @@ class PokerHandForm extends React.Component {
     console.log(playerCards.hand);
     // console.log("opp", opponentCards.hand);
 
-    console.log(playerCards.isStriaghtFlush(playerCards.hand));
+    console.log("royal flush", playerCards.isRoyalFlush(playerCards.hand));
+    console.log(
+      "straight flush",
+      playerCards.isStraightFlush(playerCards.hand)
+    );
+    console.log("flush", playerCards.isFlush(playerCards.hand));
+    console.log("straight", playerCards.isStraight(playerCards.hand));
+    console.log("full house", playerCards.isFullHouse(playerCards.hand));
+    console.log("dupes", playerCards.duplicateCounter(playerCards.hand));
+
+    console.log("four kind", playerCards.isFourKind(playerCards.hand));
+    console.log("three kind", playerCards.isThreeKind(playerCards.hand));
+    // console.log("two pair", playerCards.isTwoPair(playerCards.hand));
+    console.log("pair", playerCards.isPair(playerCards.hand));
+    // console.log("high card", playerCards.isHighCard(playerCards.hand));
 
     // playerCards.compareWith(opponentCards);
   }
