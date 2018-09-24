@@ -21421,6 +21421,9 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var result = { win: 1, loss: 2, tie: 3 };
+var pokerHand = __webpack_require__(/*! ./pokerSourceCode */ "./src/components/pokerSourceCode.js");
+
 var PokerHandForm = function (_React$Component) {
   _inherits(PokerHandForm, _React$Component);
 
@@ -21437,6 +21440,7 @@ var PokerHandForm = function (_React$Component) {
 
     _this.handlePlayerChange = _this.handlePlayerChange.bind(_this);
     _this.handleOpponentChange = _this.handleOpponentChange.bind(_this);
+    _this.compareHands = _this.compareHands.bind(_this);
     return _this;
   }
 
@@ -21455,15 +21459,29 @@ var PokerHandForm = function (_React$Component) {
       });
     }
   }, {
+    key: "compareHands",
+    value: function compareHands(event) {
+      event.preventDefault();
+
+      var playerCards = new pokerHand(this.state.playerHand);
+      var opponentCards = new pokerHand(this.state.opponentHand);
+
+      console.log(playerCards.hand);
+      // console.log("opp", opponentCards.hand);
+
+      console.log(playerCards.isStriaghtFlush(playerCards.hand));
+
+      // playerCards.compareWith(opponentCards);
+    }
+  }, {
     key: "render",
     value: function render() {
-      console.log(this.state.playerHand, this.state.opponentHand);
       return _react2.default.createElement(
         "div",
         null,
         _react2.default.createElement(
           "form",
-          { className: "form-wrapper" },
+          { onSubmit: this.compareHands, className: "form-wrapper" },
           _react2.default.createElement(
             "p",
             null,
@@ -21500,6 +21518,80 @@ var PokerHandForm = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = PokerHandForm;
+
+/***/ }),
+
+/***/ "./src/components/pokerSourceCode.js":
+/*!*******************************************!*\
+  !*** ./src/components/pokerSourceCode.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var PokerHand = function () {
+  function PokerHand(inputData) {
+    _classCallCheck(this, PokerHand);
+
+    this.hand = inputData.split(" ").map(function (card) {
+      var currentCard = {
+        suit: card[1]
+      };
+      if (card[0] === "A") currentCard.value = 14;else if (card[0] === "K") currentCard.value = 13;else if (card[0] === "Q") currentCard.value = 12;else if (card[0] === "J") currentCard.value = 11;else if (card[0] === "T") currentCard.value = 10;else currentCard.value = Number(card[0]);
+
+      return currentCard;
+    });
+  }
+
+  _createClass(PokerHand, [{
+    key: "sortByValueAsc",
+    value: function sortByValueAsc(hand) {
+      return hand.slice(0).sort(function (a, b) {
+        return a.value - b.value;
+      });
+    }
+  }, {
+    key: "isFlush",
+    value: function isFlush(hand) {
+      var flush = 5;
+      hand.forEach(function (card) {
+        if (card.suit !== hand[0].suit) flush = 0;
+      });
+      return flush;
+    }
+  }, {
+    key: "isStriaghtFlush",
+    value: function isStriaghtFlush(hand) {
+      if (!this.isFlush(hand)) return 0;
+      var sortedHand = this.sortByValueAsc(hand);
+      var straightFlush = 9;
+      for (var i = 0; i < sortedHand.length - 1; i++) {
+        if (sortedHand[i].value !== sortedHand[i + 1].value - 1) straightFlush = 0;
+      }
+      return straightFlush;
+    }
+  }, {
+    key: "isStraight",
+    value: function isStraight(hand) {
+      var sortedHand = this.sortByValueAsc(hand);
+      var straight = 4;
+      for (var i = 0; i < sortedHand.length - 1; i++) {
+        if (sortedHand[i].value !== sortedHand[i + 1].value - 1) straight = 0;
+      }
+      return straight;
+    }
+  }]);
+
+  return PokerHand;
+}();
+
+module.exports = PokerHand;
 
 /***/ }),
 

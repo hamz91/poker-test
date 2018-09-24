@@ -1,5 +1,8 @@
 import React from "react";
 
+const result = { win: 1, loss: 2, tie: 3 };
+const pokerHand = require("./pokerSourceCode");
+
 class PokerHandForm extends React.Component {
   constructor() {
     super();
@@ -12,6 +15,7 @@ class PokerHandForm extends React.Component {
 
     this.handlePlayerChange = this.handlePlayerChange.bind(this);
     this.handleOpponentChange = this.handleOpponentChange.bind(this);
+    this.compareHands = this.compareHands.bind(this);
   }
 
   handlePlayerChange(event) {
@@ -25,11 +29,25 @@ class PokerHandForm extends React.Component {
       opponentHand: event.target.value
     });
   }
+
+  compareHands(event) {
+    event.preventDefault();
+
+    const playerCards = new pokerHand(this.state.playerHand);
+    const opponentCards = new pokerHand(this.state.opponentHand);
+
+    console.log(playerCards.hand);
+    // console.log("opp", opponentCards.hand);
+
+    console.log(playerCards.isStriaghtFlush(playerCards.hand));
+
+    // playerCards.compareWith(opponentCards);
+  }
+
   render() {
-    console.log(this.state.playerHand, this.state.opponentHand);
     return (
       <div>
-        <form className="form-wrapper">
+        <form onSubmit={this.compareHands} className="form-wrapper">
           <p> Your Hand: </p>
           <input
             onChange={this.handlePlayerChange}
