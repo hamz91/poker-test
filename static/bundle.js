@@ -21475,14 +21475,18 @@ var PokerHandForm = function (_React$Component) {
     value: function compareHands(event) {
       event.preventDefault();
 
-      var playerCards = new pokerHand(this.state.playerHand);
-      var opponentCards = new pokerHand(this.state.opponentHand);
+      if (this.state.playerHand.length === 14 && this.state.opponentHand.length === 14) {
+        var playerCards = new pokerHand(this.state.playerHand.toUpperCase());
+        var opponentCards = new pokerHand(this.state.opponentHand.toUpperCase());
 
-      console.log("finalFLASH", playerCards.finalValue(playerCards.hand));
+        console.log("finalFLASH", playerCards.finalValue(playerCards.hand));
 
-      this.setState({
-        result: playerCards.compareWith(opponentCards.hand)
-      });
+        this.setState({
+          result: playerCards.compareWith(opponentCards.hand)
+        });
+      } else {
+        alert("Please enter a correct poker hand");
+      }
     }
   }, {
     key: "render",
@@ -21496,8 +21500,8 @@ var PokerHandForm = function (_React$Component) {
           { onSubmit: this.compareHands, className: "form-wrapper" },
           _react2.default.createElement(
             "p",
-            null,
-            " Your Hand: "
+            { className: "form-text" },
+            " Your Hand "
           ),
           _react2.default.createElement("input", {
             onChange: this.handlePlayerChange,
@@ -21507,8 +21511,8 @@ var PokerHandForm = function (_React$Component) {
           }),
           _react2.default.createElement(
             "p",
-            null,
-            " Opponents Hand: "
+            { className: "form-text" },
+            " Opponents Hand "
           ),
           _react2.default.createElement("input", {
             onChange: this.handleOpponentChange,
@@ -21749,16 +21753,16 @@ var PokerHand = function () {
       if (playerValue > opponentValue) {
         return {
           result: result.win,
-          description: "You won with a" + " " + handNames[playerValue]
+          description: "You won with a " + handNames[playerValue]
         };
       } else if (playerValue < opponentValue) {
         return {
           result: result.loss,
-          description: "You lost to a" + " " + handNames[opponentValue]
+          description: "You lost to a " + handNames[opponentValue]
         };
       } else return {
         result: result.tie,
-        description: "You tied with a" + " " + handNames[playerValue]
+        description: "You tied with a " + handNames[playerValue]
       };
     }
   }]);

@@ -33,14 +33,23 @@ class PokerHandForm extends React.Component {
   compareHands(event) {
     event.preventDefault();
 
-    const playerCards = new pokerHand(this.state.playerHand);
-    const opponentCards = new pokerHand(this.state.opponentHand);
+    if (
+      this.state.playerHand.length === 14 &&
+      this.state.opponentHand.length === 14
+    ) {
+      const playerCards = new pokerHand(this.state.playerHand.toUpperCase());
+      const opponentCards = new pokerHand(
+        this.state.opponentHand.toUpperCase()
+      );
 
-    console.log("finalFLASH", playerCards.finalValue(playerCards.hand));
+      console.log("finalFLASH", playerCards.finalValue(playerCards.hand));
 
-    this.setState({
-      result: playerCards.compareWith(opponentCards.hand)
-    });
+      this.setState({
+        result: playerCards.compareWith(opponentCards.hand)
+      });
+    } else {
+      alert("Please enter a correct poker hand");
+    }
   }
 
   render() {
@@ -48,14 +57,14 @@ class PokerHandForm extends React.Component {
     return (
       <div>
         <form onSubmit={this.compareHands} className="form-wrapper">
-          <p> Your Hand: </p>
+          <p className="form-text"> Your Hand </p>
           <input
             onChange={this.handlePlayerChange}
             value={this.state.playerHand}
             placeholder="2H 3D 5C 6S KH..."
             className="form-input"
           />
-          <p> Opponents Hand: </p>
+          <p className="form-text"> Opponents Hand </p>
           <input
             onChange={this.handleOpponentChange}
             value={this.state.opponentHand}

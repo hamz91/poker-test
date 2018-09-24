@@ -166,17 +166,17 @@ class PokerHand {
     if (playerValue > opponentValue) {
       return {
         result: result.win,
-        description: "You won with a" + " " + handNames[playerValue]
+        description: `You won with a ${handNames[playerValue]}`
       };
     } else if (playerValue < opponentValue) {
       return {
         result: result.loss,
-        description: "You lost to a" + " " + handNames[opponentValue]
+        description: `You lost to a ${handNames[opponentValue]}`
       };
     } else
       return {
         result: result.tie,
-        description: "You tied with a" + " " + handNames[playerValue]
+        description: `You tied with a ${handNames[playerValue]}`
       };
   }
 }
