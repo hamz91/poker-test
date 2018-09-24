@@ -21345,7 +21345,16 @@ var App = function (_React$Component) {
         "div",
         null,
         _react2.default.createElement(_Header2.default, null),
-        _react2.default.createElement(_PokerHandForm2.default, null)
+        _react2.default.createElement(_PokerHandForm2.default, null),
+        _react2.default.createElement(
+          "footer",
+          null,
+          _react2.default.createElement(
+            "h4",
+            null,
+            "Remember To Gamble Responsibly, Kids!"
+          )
+        )
       );
     }
   }]);
@@ -21413,6 +21422,10 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _PokerHandResult = __webpack_require__(/*! ./PokerHandResult */ "./src/components/PokerHandResult.js");
+
+var _PokerHandResult2 = _interopRequireDefault(_PokerHandResult);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -21421,7 +21434,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var result = { win: 1, loss: 2, tie: 3 };
 var pokerHand = __webpack_require__(/*! ./pokerSourceCode */ "./src/components/pokerSourceCode.js");
 
 var PokerHandForm = function (_React$Component) {
@@ -21435,7 +21447,7 @@ var PokerHandForm = function (_React$Component) {
     _this.state = {
       playerHand: "",
       opponentHand: "",
-      result: 0
+      result: {}
     };
 
     _this.handlePlayerChange = _this.handlePlayerChange.bind(_this);
@@ -21466,27 +21478,16 @@ var PokerHandForm = function (_React$Component) {
       var playerCards = new pokerHand(this.state.playerHand);
       var opponentCards = new pokerHand(this.state.opponentHand);
 
-      console.log(playerCards.hand);
-      // console.log("opp", opponentCards.hand);
+      console.log("finalFLASH", playerCards.finalValue(playerCards.hand));
 
-      console.log("royal flush", playerCards.isRoyalFlush(playerCards.hand));
-      console.log("straight flush", playerCards.isStraightFlush(playerCards.hand));
-      console.log("flush", playerCards.isFlush(playerCards.hand));
-      console.log("straight", playerCards.isStraight(playerCards.hand));
-      console.log("full house", playerCards.isFullHouse(playerCards.hand));
-      console.log("dupes", playerCards.duplicateCounter(playerCards.hand));
-
-      console.log("four kind", playerCards.isFourKind(playerCards.hand));
-      console.log("three kind", playerCards.isThreeKind(playerCards.hand));
-      // console.log("two pair", playerCards.isTwoPair(playerCards.hand));
-      console.log("pair", playerCards.isPair(playerCards.hand));
-      // console.log("high card", playerCards.isHighCard(playerCards.hand));
-
-      // playerCards.compareWith(opponentCards);
+      this.setState({
+        result: playerCards.compareWith(opponentCards.hand)
+      });
     }
   }, {
     key: "render",
     value: function render() {
+      console.log(this.state.result);
       return _react2.default.createElement(
         "div",
         null,
@@ -21520,7 +21521,8 @@ var PokerHandForm = function (_React$Component) {
             null,
             "Submit"
           )
-        )
+        ),
+        _react2.default.createElement(_PokerHandResult2.default, { result: this.state.result })
       );
     }
   }]);
@@ -21529,6 +21531,49 @@ var PokerHandForm = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = PokerHandForm;
+
+/***/ }),
+
+/***/ "./src/components/PokerHandResult.js":
+/*!*******************************************!*\
+  !*** ./src/components/PokerHandResult.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function PokerHandResult(_ref) {
+  var result = _ref.result;
+
+  return _react2.default.createElement(
+    "div",
+    { className: "results" },
+    _react2.default.createElement(
+      "h4",
+      { className: "results__score" },
+      result.result
+    ),
+    _react2.default.createElement(
+      "h3",
+      { className: "results__hand" },
+      result.description
+    )
+  );
+}
+
+exports.default = PokerHandResult;
 
 /***/ }),
 
@@ -21651,6 +21696,17 @@ var PokerHand = function () {
     key: "isTwoPair",
     value: function isTwoPair(hand) {
       var twoPair = 3;
+      for (var i = 0; i < hand.length - 1; i++) {
+        if (hand[i].value === hand[i + 1].value) {
+          for (var j = i + 1; j < hand.length - 1; j++) {
+            if (hand[j].value === hand[j + 1].value) {
+              return twoPair;
+            }
+          }
+          break;
+        }
+      }
+      return 0;
     }
   }, {
     key: "isFullHouse",
@@ -21673,6 +21729,37 @@ var PokerHand = function () {
           return fullHouse;
         } else return 0;
       } else return 0;
+    }
+  }, {
+    key: "finalValue",
+    value: function finalValue(hand) {
+      return Math.max(this.isFlush(hand), this.isFourKind(hand), this.isFullHouse(hand), this.isPair(hand), this.isRoyalFlush(hand), this.isStraight(hand), this.isStraightFlush(hand), this.isThreeKind(hand), this.isTwoPair(hand));
+    }
+  }, {
+    key: "compareWith",
+    value: function compareWith(opponent) {
+      var result = { win: 1, loss: 2, tie: 3 };
+      var playerValue = this.finalValue(this.hand);
+      var opponentValue = this.finalValue(opponent);
+
+      // Array of hand names...
+      // Second index is left empty as there is no corresponding value within the functions
+      var handNames = ["High Card", " ", "Pair", "Two Pair", "Three of a Kind", "Straight", "Flush", "Full House", "Four of a Kind", "Straight Flush", "Royal Flush"];
+
+      if (playerValue > opponentValue) {
+        return {
+          result: result.win,
+          description: "You won with a" + " " + handNames[playerValue]
+        };
+      } else if (playerValue < opponentValue) {
+        return {
+          result: result.loss,
+          description: "You lost to a" + " " + handNames[opponentValue]
+        };
+      } else return {
+        result: result.tie,
+        description: "You tied with a" + " " + handNames[playerValue]
+      };
     }
   }]);
 

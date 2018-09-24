@@ -94,6 +94,17 @@ class PokerHand {
 
   isTwoPair(hand) {
     let twoPair = 3;
+    for (let i = 0; i < hand.length - 1; i++) {
+      if (hand[i].value === hand[i + 1].value) {
+        for (let j = i + 1; j < hand.length - 1; j++) {
+          if (hand[j].value === hand[j + 1].value) {
+            return twoPair;
+          }
+        }
+        break;
+      }
+    }
+    return 0;
   }
 
   isFullHouse(hand) {
@@ -115,6 +126,58 @@ class PokerHand {
         return fullHouse;
       } else return 0;
     } else return 0;
+  }
+
+  finalValue(hand) {
+    return Math.max(
+      this.isFlush(hand),
+      this.isFourKind(hand),
+      this.isFullHouse(hand),
+      this.isPair(hand),
+      this.isRoyalFlush(hand),
+      this.isStraight(hand),
+      this.isStraightFlush(hand),
+      this.isThreeKind(hand),
+      this.isTwoPair(hand)
+    );
+  }
+
+  compareWith(opponent) {
+    const result = { win: 1, loss: 2, tie: 3 };
+    const playerValue = this.finalValue(this.hand);
+    const opponentValue = this.finalValue(opponent);
+
+    // Array of hand names...
+    // Second index is left empty as there is no corresponding value within the functions
+    const handNames = [
+      "High Card",
+      " ",
+      "Pair",
+      "Two Pair",
+      "Three of a Kind",
+      "Straight",
+      "Flush",
+      "Full House",
+      "Four of a Kind",
+      "Straight Flush",
+      "Royal Flush"
+    ];
+
+    if (playerValue > opponentValue) {
+      return {
+        result: result.win,
+        description: "You won with a" + " " + handNames[playerValue]
+      };
+    } else if (playerValue < opponentValue) {
+      return {
+        result: result.loss,
+        description: "You lost to a" + " " + handNames[opponentValue]
+      };
+    } else
+      return {
+        result: result.tie,
+        description: "You tied with a" + " " + handNames[playerValue]
+      };
   }
 }
 

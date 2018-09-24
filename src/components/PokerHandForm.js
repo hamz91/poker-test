@@ -1,6 +1,6 @@
 import React from "react";
+import PokerHandResult from "./PokerHandResult";
 
-const result = { win: 1, loss: 2, tie: 3 };
 const pokerHand = require("./pokerSourceCode");
 
 class PokerHandForm extends React.Component {
@@ -10,7 +10,7 @@ class PokerHandForm extends React.Component {
     this.state = {
       playerHand: "",
       opponentHand: "",
-      result: 0
+      result: {}
     };
 
     this.handlePlayerChange = this.handlePlayerChange.bind(this);
@@ -36,29 +36,15 @@ class PokerHandForm extends React.Component {
     const playerCards = new pokerHand(this.state.playerHand);
     const opponentCards = new pokerHand(this.state.opponentHand);
 
-    console.log(playerCards.hand);
-    // console.log("opp", opponentCards.hand);
+    console.log("finalFLASH", playerCards.finalValue(playerCards.hand));
 
-    console.log("royal flush", playerCards.isRoyalFlush(playerCards.hand));
-    console.log(
-      "straight flush",
-      playerCards.isStraightFlush(playerCards.hand)
-    );
-    console.log("flush", playerCards.isFlush(playerCards.hand));
-    console.log("straight", playerCards.isStraight(playerCards.hand));
-    console.log("full house", playerCards.isFullHouse(playerCards.hand));
-    console.log("dupes", playerCards.duplicateCounter(playerCards.hand));
-
-    console.log("four kind", playerCards.isFourKind(playerCards.hand));
-    console.log("three kind", playerCards.isThreeKind(playerCards.hand));
-    // console.log("two pair", playerCards.isTwoPair(playerCards.hand));
-    console.log("pair", playerCards.isPair(playerCards.hand));
-    // console.log("high card", playerCards.isHighCard(playerCards.hand));
-
-    // playerCards.compareWith(opponentCards);
+    this.setState({
+      result: playerCards.compareWith(opponentCards.hand)
+    });
   }
 
   render() {
+    console.log(this.state.result);
     return (
       <div>
         <form onSubmit={this.compareHands} className="form-wrapper">
@@ -78,7 +64,7 @@ class PokerHandForm extends React.Component {
           />
           <button>Submit</button>
         </form>
-        {/* <PokerHandResult result={this.state.result} /> */}
+        <PokerHandResult result={this.state.result} />
       </div>
     );
   }
