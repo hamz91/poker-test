@@ -21348,7 +21348,7 @@ var App = function (_React$Component) {
         _react2.default.createElement(_PokerHandForm2.default, null),
         _react2.default.createElement(
           "footer",
-          null,
+          { className: "footer" },
           _react2.default.createElement(
             "h4",
             null,
@@ -21523,7 +21523,7 @@ var PokerHandForm = function (_React$Component) {
           _react2.default.createElement(
             "button",
             null,
-            "Submit"
+            "Deal"
           )
         ),
         _react2.default.createElement(_PokerHandResult2.default, { result: this.state.result })
@@ -21565,14 +21565,27 @@ function PokerHandResult(_ref) {
     "div",
     { className: "results" },
     _react2.default.createElement(
+      "p",
+      null,
+      "Results will appear below..."
+    ),
+    _react2.default.createElement(
       "h4",
       { className: "results__score" },
-      result.result
+      _react2.default.createElement(
+        "i",
+        null,
+        result.result
+      )
     ),
     _react2.default.createElement(
       "h3",
       { className: "results__hand" },
-      result.description
+      _react2.default.createElement(
+        "b",
+        null,
+        result.description
+      )
     )
   );
 }

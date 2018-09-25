@@ -6,12 +6,12 @@
 
 - Run npm install from the terminal in order to acquire the needed dependencies.
 
-- Using local host, enter the port number displayed in the server.js file (change if needed).
+- Load the index.html(found in the root folder of the app) within your web browser.
 
 # Bugs to fix:
 
 Ace is currently valued as the highest card, need to find a way to use for a low card straight.
 
-Form validation is not complete, incorrect input could crash the app.
+No tests unfortunately, spent far too long on the first one. Need to practice testing classes/using jest more.
 
-Tests not thorough enough at the moment (low coverage).
+Styling needs to be improved. Basic at the moment.

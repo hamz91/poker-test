@@ -71,7 +71,7 @@ class PokerHandForm extends React.Component {
             placeholder="8D 4D 4H 4S TH..."
             className="form-input"
           />
-          <button>Submit</button>
+          <button>Deal</button>
         </form>
         <PokerHandResult result={this.state.result} />
       </div>

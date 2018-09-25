@@ -8,7 +8,7 @@ class App extends React.Component {
       <div>
         <Header />
         <PokerHandForm />
-        <footer>
+        <footer className="footer">
           <h4>Remember To Gamble Responsibly, Kids!</h4>
         </footer>
       </div>

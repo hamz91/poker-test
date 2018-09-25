@@ -5,17 +5,22 @@
 body {
   margin: 0;
   padding: 0;
+
+  height: 100vh;
+
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
 .header {
   padding: 20px;
+
   background-color: #e7e5ea;
 }
 
 .header__title {
   text-align: center;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+
   color: #487586;
 }
 
@@ -36,4 +41,25 @@ body {
   margin: 5px;
 
   border-color: #487586;
+}
+
+.results {
+  padding: 5px;
+  margin: 0px;
+
+  text-align: center;
+
+  background-color: #e0e0e8;
+
+  height: 50vh;
+}
+
+.footer {
+  padding: 5px;
+  margin: 0;
+
+  background-color: #e7e5ea;
+  color: #487586;
+
+  text-align: center;
 }
