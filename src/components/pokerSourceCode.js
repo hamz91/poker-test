@@ -182,3 +182,5 @@ class PokerHand {
 }
 
 module.exports = PokerHand;
+
+exports.PokerHand = PokerHand;

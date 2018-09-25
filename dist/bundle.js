@@ -21772,6 +21772,8 @@ var PokerHand = function () {
 
 module.exports = PokerHand;
 
+exports.PokerHand = PokerHand;
+
 /***/ }),
 
 /***/ "./src/index.js":
