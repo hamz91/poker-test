@@ -14,6 +14,8 @@ class PokerHand {
       return currentCard;
     });
   }
+
+  // sort hand for straight-type hands
   sortByValueAsc(hand) {
     return hand.slice(0).sort((a, b) => a.value - b.value);
   }
@@ -56,6 +58,7 @@ class PokerHand {
     return straight;
   }
 
+  // counter function to help for paired hands e.g four of a kind
   duplicateCounter(hand) {
     let tempCount = 1;
     let counter = 1;
@@ -94,6 +97,8 @@ class PokerHand {
 
   isTwoPair(hand) {
     let twoPair = 3;
+
+    // 2 loops created, second starts after the first pair is acquired
     for (let i = 0; i < hand.length - 1; i++) {
       if (hand[i].value === hand[i + 1].value) {
         for (let j = i + 1; j < hand.length - 1; j++) {
@@ -128,6 +133,7 @@ class PokerHand {
     } else return 0;
   }
 
+  // Finds value of hand
   finalValue(hand) {
     return Math.max(
       this.isFlush(hand),
@@ -142,6 +148,7 @@ class PokerHand {
     );
   }
 
+  // Compares hands and returns Object with "Result" score and description
   compareWith(opponent) {
     const result = { win: 1, loss: 2, tie: 3 };
     const playerValue = this.finalValue(this.hand);

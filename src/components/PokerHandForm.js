@@ -13,8 +13,11 @@ class PokerHandForm extends React.Component {
       result: {}
     };
 
+    // Change listeners on input fields
     this.handlePlayerChange = this.handlePlayerChange.bind(this);
     this.handleOpponentChange = this.handleOpponentChange.bind(this);
+
+    // Submit listener to perform comparison check
     this.compareHands = this.compareHands.bind(this);
   }
 
@@ -33,6 +36,7 @@ class PokerHandForm extends React.Component {
   compareHands(event) {
     event.preventDefault();
 
+    // Minor form validation using input length
     if (
       this.state.playerHand.length === 14 &&
       this.state.opponentHand.length === 14
@@ -41,8 +45,6 @@ class PokerHandForm extends React.Component {
       const opponentCards = new pokerHand(
         this.state.opponentHand.toUpperCase()
       );
-
-      console.log("finalFLASH", playerCards.finalValue(playerCards.hand));
 
       this.setState({
         result: playerCards.compareWith(opponentCards.hand)
@@ -53,7 +55,6 @@ class PokerHandForm extends React.Component {
   }
 
   render() {
-    console.log(this.state.result);
     return (
       <div>
         <form onSubmit={this.compareHands} className="form-wrapper">

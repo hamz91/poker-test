@@ -21450,8 +21450,11 @@ var PokerHandForm = function (_React$Component) {
       result: {}
     };
 
+    // Change listeners on input fields
     _this.handlePlayerChange = _this.handlePlayerChange.bind(_this);
     _this.handleOpponentChange = _this.handleOpponentChange.bind(_this);
+
+    // Submit listener to perform comparison check
     _this.compareHands = _this.compareHands.bind(_this);
     return _this;
   }
@@ -21475,11 +21478,10 @@ var PokerHandForm = function (_React$Component) {
     value: function compareHands(event) {
       event.preventDefault();
 
+      // Minor form validation using input length
       if (this.state.playerHand.length === 14 && this.state.opponentHand.length === 14) {
         var playerCards = new pokerHand(this.state.playerHand.toUpperCase());
         var opponentCards = new pokerHand(this.state.opponentHand.toUpperCase());
-
-        console.log("finalFLASH", playerCards.finalValue(playerCards.hand));
 
         this.setState({
           result: playerCards.compareWith(opponentCards.hand)
@@ -21491,7 +21493,6 @@ var PokerHandForm = function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      console.log(this.state.result);
       return _react2.default.createElement(
         "div",
         null,
@@ -21622,6 +21623,9 @@ var PokerHand = function () {
     });
   }
 
+  // sort hand for straight-type hands
+
+
   _createClass(PokerHand, [{
     key: "sortByValueAsc",
     value: function sortByValueAsc(hand) {
@@ -21670,6 +21674,9 @@ var PokerHand = function () {
       }
       return straight;
     }
+
+    // counter function to help for paired hands e.g four of a kind
+
   }, {
     key: "duplicateCounter",
     value: function duplicateCounter(hand) {
@@ -21713,6 +21720,8 @@ var PokerHand = function () {
     key: "isTwoPair",
     value: function isTwoPair(hand) {
       var twoPair = 3;
+
+      // 2 loops created, second starts after the first pair is acquired
       for (var i = 0; i < hand.length - 1; i++) {
         if (hand[i].value === hand[i + 1].value) {
           for (var j = i + 1; j < hand.length - 1; j++) {
@@ -21747,11 +21756,17 @@ var PokerHand = function () {
         } else return 0;
       } else return 0;
     }
+
+    // Finds value of hand
+
   }, {
     key: "finalValue",
     value: function finalValue(hand) {
       return Math.max(this.isFlush(hand), this.isFourKind(hand), this.isFullHouse(hand), this.isPair(hand), this.isRoyalFlush(hand), this.isStraight(hand), this.isStraightFlush(hand), this.isThreeKind(hand), this.isTwoPair(hand));
     }
+
+    // Compares hands and returns Object with "Result" score and description
+
   }, {
     key: "compareWith",
     value: function compareWith(opponent) {
