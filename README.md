@@ -6,7 +6,9 @@
 
 - Run npm install from the terminal in order to acquire the needed dependencies.
 
-- Load the index.html(found in the root folder of the app) within your web browser.
+- Load the index.html file(found in the root folder of the app) within your web browser to access the app.
+
+- Enter both your own and an opponents poker hand in order to compare hands, hit Deal when ready. Make sure the input is 14 characters long e.g "4H 6C 7S TS 6D" <b>(make sure that 10 is entered as a T)</b>.
 
 # Bugs to fix:
 
