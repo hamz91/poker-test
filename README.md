@@ -14,6 +14,6 @@
 
 Ace is currently valued as the highest card, need to find a way to use for a low card straight.
 
-No tests unfortunately, spent far too long on the first one. Need to practice testing classes/using jest more.
+Poor test coverage, I ran into an issue with the "full house" and "four of a kind" functions even though they work in the browser. Will fix.
 
 Styling needs to be improved. Basic at the moment.
