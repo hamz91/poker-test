@@ -2,7 +2,7 @@
 
 # Instructions to run
 
-- Fork and clone the repo.
+- Clone the repo.
 
 - Run npm install from the terminal in order to acquire the needed dependencies.
 
